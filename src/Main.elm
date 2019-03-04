@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, text)
+import Html exposing (Html, button, div, text, br)
 import Html.Events exposing (onClick)
 
 main : Program () Model Msg
@@ -27,6 +27,7 @@ init = 0
 type Msg
     = Increment
     | Decrement
+    | ResetCounter
 
 update : Msg -> Model -> Model
 update msg  model =
@@ -37,6 +38,8 @@ update msg  model =
         Decrement ->
             model - 1
 
+        ResetCounter ->
+            init  -- 初期化を行う
 -- VIEW
 
 view : Model -> Html Msg
@@ -45,4 +48,6 @@ view model =
         [ button [ onClick Decrement ] [ text "-" ]
         , div [] [ text (String.fromInt model) ]
         , button [ onClick Increment ] [ text "+" ]
+        , br [] []
+        , button [ onClick ResetCounter ] [ text "Reset" ]
         ]
