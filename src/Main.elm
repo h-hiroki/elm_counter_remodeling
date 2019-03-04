@@ -1,7 +1,7 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, text)
+import Html exposing (Html, button, div, text, br)
 import Html.Events exposing (onClick)
 
 main : Program () Model Msg
@@ -15,11 +15,12 @@ main =
 
 -- MODEL
 
-type alias Model
-    = Int
+type alias Model =
+    { countNum : Int }
 
 init : Model
-init = 0
+init =
+    { countNum = 0}
 
 
 -- UPDATE
@@ -27,22 +28,27 @@ init = 0
 type Msg
     = Increment
     | Decrement
+    | ResetCounter
 
 update : Msg -> Model -> Model
 update msg  model =
     case msg of
         Increment ->
-            model + 1
+            { model | countNum = model.countNum + 1 }
 
         Decrement ->
-            model - 1
+            { model | countNum = model.countNum - 1 }
 
+        ResetCounter ->
+            { model | countNum = 0}
 -- VIEW
 
 view : Model -> Html Msg
 view model =
     div []
         [ button [ onClick Decrement ] [ text "-" ]
-        , div [] [ text (String.fromInt model) ]
+        , div [] [ text (String.fromInt model.countNum) ]
         , button [ onClick Increment ] [ text "+" ]
+        , br [] []
+        , button [ onClick ResetCounter ] [ text "Reset" ]
         ]
