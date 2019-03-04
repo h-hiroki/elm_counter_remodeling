@@ -29,6 +29,8 @@ type Msg
     = Increment
     | Decrement
     | ResetCounter
+    | IncrementX2
+    | DecrementX2
 
 update : Msg -> Model -> Model
 update msg  model =
@@ -41,14 +43,24 @@ update msg  model =
 
         ResetCounter ->
             { model | countNum = 0}
+
+        IncrementX2 ->
+            { model | countNum = model.countNum * 2 }
+
+        DecrementX2 ->
+            { model | countNum = model.countNum * (-2) }
 -- VIEW
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Decrement ] [ text "-" ]
+        [ button [ onClick DecrementX2 ] [ text "-x2"]
+        , br [] []
+        , button [ onClick Decrement ] [ text "-" ]
         , div [] [ text (String.fromInt model.countNum) ]
         , button [ onClick Increment ] [ text "+" ]
+        , br [] []
+        , button [ onClick IncrementX2 ] [ text "+x2" ]
         , br [] []
         , button [ onClick ResetCounter ] [ text "Reset" ]
         ]
